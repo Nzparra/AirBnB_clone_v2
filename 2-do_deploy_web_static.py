@@ -10,6 +10,19 @@ env.hosts = ['35.237.42.19', '107.21.12.250']
 env.user = "ubuntu"
 
 
+def do_pack():
+    try:
+        if not os.path.exists("versions"):
+            local('mkdir versions')
+        tm = datetime.now()
+        stamp = "%Y%m%d%H%M%S"
+        file_path = 'versions/web_static_{}.tgz'.format(tm.strftime(stamp))
+        local('tar -cvzf {} web_static'.format(file_path))
+        return file_path
+    except:
+        return None
+
+
 def do_deploy(archive_path):
     """ Deploy """
     if not os.path.exists(archive_path):
